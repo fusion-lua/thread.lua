@@ -8,7 +8,7 @@ local Camera = workspace.CurrentCamera
 
 local AimbotAvailable = false -- f2 toggle primary (availibility)
 local Locking = false         -- m3 toggle
-local FOVVisible = true       -- f1 to toggle
+local FOVVisible = false       -- f1 to toggle
 local FOVSize = 150
 local SmoothSpeed = 0.2       -- higher = MORE SMOOTHING!
 
