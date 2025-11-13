@@ -17,12 +17,15 @@ Version: 1.0.1  |  Status: Stable
 Silent. Consistent. Free.
 ------------------------------------------
 
+F1 - Toggle Aimbot FOV
+F2 - Toggle Aimbot
 F3 - Toggle Player & NPC ESP
 F4 - Toggle Player Visibility Through Walls
 F5 - Stop / Remove All ESP
 F6 - List all bosses and their status
 `  - Hold to zoom
-
+Scroll Wheel - Aimbot (Toggle)
+	
 ---------------------------------------------
 © 2025 Fusion | Paid distribution restricted.
 =============================================
@@ -497,6 +500,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
