@@ -335,7 +335,6 @@ for _, plr in ipairs(Players:GetPlayers()) do
 	end)
 end
 
--- MI24V logic: shows distance in studs
 local function setupMI24VModel(miModel)
 	if not miModel or miModel:FindFirstChildOfClass("Highlight") then return end
 	local rootPart = miModel:FindFirstChild("HumanoidRootPart") or miModel:FindFirstChildWhichIsA("BasePart")
@@ -392,7 +391,6 @@ local function setupMI24VModel(miModel)
 	end)
 end
 
--- Recursive scan for MI24V
 local function scanForMI24V(parent)
 	for _, obj in ipairs(parent:GetChildren()) do
 		if obj.Name == "MI24V" and obj:IsA("Model") then
@@ -464,3 +462,5 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
+-- hi
