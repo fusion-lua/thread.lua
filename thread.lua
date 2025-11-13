@@ -13,7 +13,7 @@ and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 1.0.0  |  Status: Stable
+Version: 1.0.1  |  Status: Stable
 Silent. Consistent. Free.
 ------------------------------------------
 
@@ -498,3 +498,4 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
