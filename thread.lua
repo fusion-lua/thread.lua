@@ -47,42 +47,28 @@ local function Notify(title, text, duration)
 	end)
 end
 
-Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
+Notify("thread.lua", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
-task.spawn(function()
-    local player = game:GetService("Players").LocalPlayer
-    local gui = Instance.new("ScreenGui")
-    gui.Name = "PSightLogo"
-    gui.ResetOnSpawn = false
-    gui.Parent = player:WaitForChild("PlayerGui")
-    gui.Enabled = true
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-    local image = Instance.new("ImageLabel")
-    image.Size = UDim2.new(0, 400, 0, 200)
-    image.Position = UDim2.new(0.5, 0, 0.5, 0)
-    image.AnchorPoint = Vector2.new(0.5, 0.5)
-    image.BackgroundTransparency = 1
-    image.Image = "rbxassetid://102238421384752"
-    image.ImageTransparency = 0
-    image.Parent = gui
+local gui = Instance.new("ScreenGui")
+gui.Name = "PSightLogo"
+gui.Parent = PlayerGui
+gui.ResetOnSpawn = false
 
-    
-    for i = 1,0,-0.05 do
-        image.ImageTransparency = i
-        task.wait(0.03)
-    end
+local image = Instance.new("ImageLabel")
+image.Size = UDim2.new(0, 400, 0, 200)
+image.Position = UDim2.new(0.5, 0, 0.5, 0)
+image.AnchorPoint = Vector2.new(0.5, 0.5)
+image.BackgroundTransparency = 1
+image.Image = "rbxassetid://102238421384752"
+image.Parent = gui
 
-    
-    task.wait(3)
+task.wait(3)
 
-    
-    for i = 0,1,0.05 do
-        image.ImageTransparency = i
-        task.wait(0.03)
-    end
-
-    gui:Destroy()
-end)
+gui:Destroy()
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -450,7 +436,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 	if input.KeyCode == Enum.KeyCode.F3 then
 		enabled = not enabled
 		refreshHighlights()
-		Notify("PSight", "Toggled NPC/Player ESP", 3)
+		Notify("thread.lua", "Toggled NPC/Player ESP", 3)
 	elseif input.KeyCode == Enum.KeyCode.F4 then
 		visibilityThroughWalls = not visibilityThroughWalls
 		for _, plr in ipairs(Players:GetPlayers()) do
@@ -461,7 +447,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 				end
 			end
 		end
-		Notify("PSight", "Toggled visibility through walls", 3)
+		Notify("thread.lua", "Toggled visibility through walls", 3)
 	elseif input.KeyCode == Enum.KeyCode.F5 then
 		for _, obj in ipairs(workspace:GetDescendants()) do
 			if obj:IsA("Model") then
@@ -471,14 +457,14 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 		for _, conn in pairs(connections) do
 			if typeof(conn) == "RBXScriptConnection" then conn:Disconnect() end
 		end
-		Notify("PSight", "Unloaded script.", 5)
+		Notify("thread.lua", "Unloaded script.", 5)
 	elseif input.KeyCode == Enum.KeyCode.F6 then
 		for _, npc in ipairs(getAllNPCs()) do
 			if isNPCDanger(npc.Name) then
 				local humanoid = npc:FindFirstChildOfClass("Humanoid")
 				if humanoid and humanoid.Health > 0 then
 					print(string.format("NPC: %s | HP: %d", npc.Name, math.floor(humanoid.Health)))
-					Notify("PSight", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
+					Notify("thread.lua", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
 				end
 			end
 		end
@@ -499,5 +485,6 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
