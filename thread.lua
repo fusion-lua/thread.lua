@@ -49,39 +49,40 @@ end
 
 Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
-local function showLogo()
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.ResetOnSpawn = false
-    screenGui.IgnoreGuiInset = true
-    screenGui.Parent = game.CoreGui
+task.spawn(function()
+    local player = game:GetService("Players").LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "PSightLogo"
+    gui.ResetOnSpawn = false
+    gui.Parent = player:WaitForChild("PlayerGui")
+    gui.Enabled = true
 
-    local logo = Instance.new("ImageLabel")
-    logo.Size = UDim2.new(0, 300, 0, 300) 
-    logo.Position = UDim2.new(0.5, 0, 0.5, 0) 
-    logo.AnchorPoint = Vector2.new(0.5, 0.5)
-    logo.BackgroundTransparency = 1
-    logo.Image = "rbxassetid://13488010891"
-    logo.ImageTransparency = 1
-    logo.Parent = screenGui
+    local image = Instance.new("ImageLabel")
+    image.Size = UDim2.new(0, 400, 0, 200)
+    image.Position = UDim2.new(0.5, 0, 0.5, 0)
+    image.AnchorPoint = Vector2.new(0.5, 0.5)
+    image.BackgroundTransparency = 1
+    image.Image = "rbxassetid://102238421384752"
+    image.ImageTransparency = 1 -- start invisible
+    image.Parent = gui
 
-    
-    for i = 0, 1, 0.05 do
-        logo.ImageTransparency = 1 - i
-        wait(0.03)
+    -- fade in
+    for i = 1,0,-0.05 do
+        image.ImageTransparency = i
+        task.wait(0.03)
     end
 
-    wait(3)
+    -- stay visible for 3 seconds
+    task.wait(3)
 
-    
-    for i = 0, 1, 0.05 do
-        logo.ImageTransparency = i
-        wait(0.03)
+    -- fade out
+    for i = 0,1,0.05 do
+        image.ImageTransparency = i
+        task.wait(0.03)
     end
 
-    screenGui:Destroy() 
-end
-
-showLogo()
+    gui:Destroy()
+end)
 
 local enabled = false
 local visibilityThroughWalls = true
