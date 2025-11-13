@@ -63,19 +63,19 @@ task.spawn(function()
     image.AnchorPoint = Vector2.new(0.5, 0.5)
     image.BackgroundTransparency = 1
     image.Image = "rbxassetid://102238421384752"
-    image.ImageTransparency = 1 -- start invisible
+    image.ImageTransparency = 0
     image.Parent = gui
 
-    -- fade in
+    
     for i = 1,0,-0.05 do
         image.ImageTransparency = i
         task.wait(0.03)
     end
 
-    -- stay visible for 3 seconds
+    
     task.wait(3)
 
-    -- fade out
+    
     for i = 0,1,0.05 do
         image.ImageTransparency = i
         task.wait(0.03)
@@ -499,4 +499,5 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
