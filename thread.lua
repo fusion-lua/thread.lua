@@ -49,14 +49,12 @@ end
 
 Notify("thread.lua", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local RunService = game:GetService("RunService")
 
 local gui = Instance.new("ScreenGui")
-gui.Name = "PSightLogo"
-gui.Parent = PlayerGui
+gui.Name = "threadlogo"
 gui.ResetOnSpawn = false
+gui.Parent = game:GetService("CoreGui")
 
 local image = Instance.new("ImageLabel")
 image.Size = UDim2.new(0, 400, 0, 200)
@@ -66,9 +64,9 @@ image.BackgroundTransparency = 1
 image.Image = "rbxassetid://102238421384752"
 image.Parent = gui
 
-task.wait(3)
-
-gui:Destroy()
+task.delay(3, function()
+    gui:Destroy()
+end)
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -485,6 +483,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
