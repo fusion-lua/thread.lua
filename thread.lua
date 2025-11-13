@@ -79,7 +79,7 @@ local imageCorner = Instance.new("UICorner")
 imageCorner.CornerRadius = UDim.new(0, 20)
 imageCorner.Parent = image
 
-task.wait(3)
+task.wait(1.5)
 screenGui:Destroy()
 
 local enabled = false
@@ -497,6 +497,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
