@@ -4,40 +4,40 @@ local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 
-local AimbotAvailable = false -- f2 toggle primary (availibility)
-local Locking = false         -- m3 toggle
-local FOVVisible = false       -- f1 to toggle
+local AimbotAvailable = false
+local Locking = false
+local FOVVisible = false
 local FOVSize = 150
-local SmoothSpeed = 0.2       -- higher = MORE SMOOTHING!
+local SmoothSpeed = 0.2
 
 local FOVCircle = Drawing.new("Circle")
-FOVCircle.Visible = true
 FOVCircle.Filled = true
 FOVCircle.Transparency = 0.15
 FOVCircle.Color = Color3.new(1,1,1)
 FOVCircle.Radius = FOVSize
+FOVCircle.Visible = FOVVisible
 
 local FOVStroke = Drawing.new("Circle")
-FOVStroke.Visible = true
 FOVStroke.Filled = false
 FOVStroke.Transparency = 1
 FOVStroke.Color = Color3.new(1,1,1)
 FOVStroke.Radius = FOVSize
 FOVStroke.Thickness = 1
+FOVStroke.Visible = FOVVisible
 
-spawn(function()
-    while FOVCircle and FOVStroke do
-        local mousePos = UserInputService:GetMouseLocation()
-        if FOVVisible then
-            FOVCircle.Visible = true
-            FOVStroke.Visible = true
-            FOVCircle.Position = mousePos
-            FOVStroke.Position = mousePos
-        else
-            FOVCircle.Visible = false
-            FOVStroke.Visible = false
-        end
-        wait(0.025)
+local connections = {}
+
+connections.fovLoop = RunService.RenderStepped:Connect(function()
+    if not FOVCircle or not FOVStroke then return end
+    local mousePos = UserInputService:GetMouseLocation()
+    if FOVVisible then
+        FOVCircle.Visible = true
+        FOVStroke.Visible = true
+        FOVCircle.Position = mousePos
+        FOVStroke.Position = mousePos
+    else
+        FOVCircle.Visible = false
+        FOVStroke.Visible = false
     end
 end)
 
@@ -62,11 +62,10 @@ local function getClosestPlayer()
             end
         end
     end
-
     return closestHead
 end
 
-RunService.RenderStepped:Connect(function()
+connections.aimbotLoop = RunService.RenderStepped:Connect(function()
     if AimbotAvailable and Locking then
         local target = getClosestPlayer()
         if target then
@@ -77,20 +76,36 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
-UserInputService.InputBegan:Connect(function(input, processed)
+local function sendNotification(desc)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "thread.lua",
+        Text = desc,
+        Duration = 2
+    })
+end
+
+connections.input = UserInputService.InputBegan:Connect(function(input, processed)
     if processed then return end
 
     if input.KeyCode == Enum.KeyCode.F1 then
-        FOVVisible = not FOVVisible 
+        FOVVisible = not FOVVisible
+        sendNotification("Aimbot FOV circle toggled " .. (FOVVisible and "on." or "off."))
     elseif input.KeyCode == Enum.KeyCode.F2 then
         AimbotAvailable = not AimbotAvailable
+        sendNotification("Aimbot toggled " .. (AimbotAvailable and "on. Click scroll wheel to lock." or "off."))
     elseif input.KeyCode == Enum.KeyCode.F5 then
-        FOVCircle:Remove()
-        FOVStroke:Remove()
+        for _, conn in pairs(connections) do
+            if conn.Connected then
+                conn:Disconnect()
+            end
+        end
+        if FOVCircle then FOVCircle:Remove() end
+        if FOVStroke then FOVStroke:Remove() end
         script:Destroy()
     elseif input.UserInputType == Enum.UserInputType.MouseButton3 then
         if AimbotAvailable then
             Locking = not Locking
+            sendNotification("Aimbot lock toggled " .. (Locking and "on." or "off."))
         end
     end
 end)
