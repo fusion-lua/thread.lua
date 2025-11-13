@@ -29,6 +29,26 @@ F6 - List all bosses and their status
 
 ]])
 
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+local StarterGui = game:GetService("StarterGui")
+
+local function Notify(title, text, duration)
+	duration = duration or 3
+	pcall(function()
+		StarterGui:SetCore("SendNotification", {
+			Title = title;
+			Text = text;
+			Duration = duration;
+		})
+	end)
+end
+
+Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
+
 local function showLogo()
     local screenGui = Instance.new("ScreenGui")
     screenGui.ResetOnSpawn = false
@@ -62,26 +82,6 @@ local function showLogo()
 end
 
 showLogo()
-
-local UIS = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
-local Camera = workspace.CurrentCamera
-local StarterGui = game:GetService("StarterGui")
-
-local function Notify(title, text, duration)
-	duration = duration or 3
-	pcall(function()
-		StarterGui:SetCore("SendNotification", {
-			Title = title;
-			Text = text;
-			Duration = duration;
-		})
-	end)
-end
-
-Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -498,4 +498,3 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
-
