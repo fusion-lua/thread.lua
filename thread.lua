@@ -29,6 +29,40 @@ F6 - List all bosses and their status
 
 ]])
 
+local function showLogo()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    screenGui.Parent = game.CoreGui
+
+    local logo = Instance.new("ImageLabel")
+    logo.Size = UDim2.new(0, 300, 0, 300) 
+    logo.Position = UDim2.new(0.5, 0, 0.5, 0) 
+    logo.AnchorPoint = Vector2.new(0.5, 0.5)
+    logo.BackgroundTransparency = 1
+    logo.Image = "rbxassetid://102238421384752"
+    logo.ImageTransparency = 1
+    logo.Parent = screenGui
+
+    
+    for i = 0, 1, 0.05 do
+        logo.ImageTransparency = 1 - i
+        wait(0.03)
+    end
+
+    wait(3)
+
+    
+    for i = 0, 1, 0.05 do
+        logo.ImageTransparency = i
+        wait(0.03)
+    end
+
+    screenGui:Destroy() 
+end
+
+showLogo()
+
 local UIS = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -47,7 +81,7 @@ local function Notify(title, text, duration)
 	end)
 end
 
-Notify("thread", "Loaded successfully. Check console (F9) for keybinds.", 7)
+Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -335,6 +369,7 @@ for _, plr in ipairs(Players:GetPlayers()) do
 	end)
 end
 
+-- MI24V logic: shows distance in studs
 local function setupMI24VModel(miModel)
 	if not miModel or miModel:FindFirstChildOfClass("Highlight") then return end
 	local rootPart = miModel:FindFirstChild("HumanoidRootPart") or miModel:FindFirstChildWhichIsA("BasePart")
@@ -391,6 +426,7 @@ local function setupMI24VModel(miModel)
 	end)
 end
 
+-- Recursive scan for MI24V
 local function scanForMI24V(parent)
 	for _, obj in ipairs(parent:GetChildren()) do
 		if obj.Name == "MI24V" and obj:IsA("Model") then
@@ -413,7 +449,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 	if input.KeyCode == Enum.KeyCode.F3 then
 		enabled = not enabled
 		refreshHighlights()
-		Notify("thread", "Toggled NPC/Player ESP", 3)
+		Notify("PSight", "Toggled NPC/Player ESP", 3)
 	elseif input.KeyCode == Enum.KeyCode.F4 then
 		visibilityThroughWalls = not visibilityThroughWalls
 		for _, plr in ipairs(Players:GetPlayers()) do
@@ -424,7 +460,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 				end
 			end
 		end
-		Notify("thread", "Toggled visibility through walls", 3)
+		Notify("PSight", "Toggled visibility through walls", 3)
 	elseif input.KeyCode == Enum.KeyCode.F5 then
 		for _, obj in ipairs(workspace:GetDescendants()) do
 			if obj:IsA("Model") then
@@ -434,14 +470,14 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 		for _, conn in pairs(connections) do
 			if typeof(conn) == "RBXScriptConnection" then conn:Disconnect() end
 		end
-		Notify("thread", "Unloaded script.", 5)
+		Notify("PSight", "Unloaded script.", 5)
 	elseif input.KeyCode == Enum.KeyCode.F6 then
 		for _, npc in ipairs(getAllNPCs()) do
 			if isNPCDanger(npc.Name) then
 				local humanoid = npc:FindFirstChildOfClass("Humanoid")
 				if humanoid and humanoid.Health > 0 then
 					print(string.format("NPC: %s | HP: %d", npc.Name, math.floor(humanoid.Health)))
-					Notify("thread", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
+					Notify("PSight", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
 				end
 			end
 		end
@@ -462,6 +498,3 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
-
--- hi
-
