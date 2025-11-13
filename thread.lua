@@ -3,7 +3,7 @@ print([[
 =============================================
               	 THREAD.LUA
 =============================================
-EVERY EXECUTOR SUPPORTED. ZERO EXTRA APIS.
+         EVERY EXECUTOR SUPPORTED.
 
 Developed by Fusion
 Open-sourced, legit universal script designed for Project Delta.
@@ -497,6 +497,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
