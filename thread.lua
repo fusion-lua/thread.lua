@@ -49,24 +49,38 @@ end
 
 Notify("thread.lua", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
-local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-local gui = Instance.new("ScreenGui")
-gui.Name = "threadlogo"
-gui.ResetOnSpawn = false
-gui.Parent = game:GetService("CoreGui")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = PlayerGui
+
+local stroke = Instance.new("Frame")
+stroke.Size = UDim2.new(0, 205, 0, 205)
+stroke.Position = UDim2.new(0.5, 0, 0.5, 0)
+stroke.AnchorPoint = Vector2.new(0.5, 0.5)
+stroke.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+stroke.Parent = screenGui
+
+local strokeCorner = Instance.new("UICorner")
+strokeCorner.CornerRadius = UDim.new(0, 20)
+strokeCorner.Parent = stroke
 
 local image = Instance.new("ImageLabel")
-image.Size = UDim2.new(0, 400, 0, 200)
+image.Image = "rbxassetid://134225845123500"
+image.Size = UDim2.new(0, 200, 0, 200)
 image.Position = UDim2.new(0.5, 0, 0.5, 0)
 image.AnchorPoint = Vector2.new(0.5, 0.5)
 image.BackgroundTransparency = 1
-image.Image = "rbxassetid://102238421384752"
-image.Parent = gui
+image.Parent = stroke
 
-task.delay(3, function()
-    gui:Destroy()
-end)
+local imageCorner = Instance.new("UICorner")
+imageCorner.CornerRadius = UDim.new(0, 20)
+imageCorner.Parent = image
+
+task.wait(3)
+screenGui:Destroy()
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -483,6 +497,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
