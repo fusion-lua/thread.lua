@@ -47,7 +47,7 @@ local function Notify(title, text, duration)
 	end)
 end
 
-Notify("PSight", "Loaded successfully. Check console (F9) for keybinds.", 7)
+Notify("thread", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
 local enabled = false
 local visibilityThroughWalls = true
@@ -413,7 +413,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 	if input.KeyCode == Enum.KeyCode.F3 then
 		enabled = not enabled
 		refreshHighlights()
-		Notify("PSight", "Toggled NPC/Player ESP", 3)
+		Notify("thread", "Toggled NPC/Player ESP", 3)
 	elseif input.KeyCode == Enum.KeyCode.F4 then
 		visibilityThroughWalls = not visibilityThroughWalls
 		for _, plr in ipairs(Players:GetPlayers()) do
@@ -424,7 +424,7 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 				end
 			end
 		end
-		Notify("PSight", "Toggled visibility through walls", 3)
+		Notify("thread", "Toggled visibility through walls", 3)
 	elseif input.KeyCode == Enum.KeyCode.F5 then
 		for _, obj in ipairs(workspace:GetDescendants()) do
 			if obj:IsA("Model") then
@@ -434,14 +434,14 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 		for _, conn in pairs(connections) do
 			if typeof(conn) == "RBXScriptConnection" then conn:Disconnect() end
 		end
-		Notify("PSight", "Unloaded script.", 5)
+		Notify("thread", "Unloaded script.", 5)
 	elseif input.KeyCode == Enum.KeyCode.F6 then
 		for _, npc in ipairs(getAllNPCs()) do
 			if isNPCDanger(npc.Name) then
 				local humanoid = npc:FindFirstChildOfClass("Humanoid")
 				if humanoid and humanoid.Health > 0 then
 					print(string.format("NPC: %s | HP: %d", npc.Name, math.floor(humanoid.Health)))
-					Notify("PSight", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
+					Notify("thread", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
 				end
 			end
 		end
@@ -464,3 +464,4 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 end)
 
 -- hi
+
