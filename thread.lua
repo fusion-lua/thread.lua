@@ -60,7 +60,7 @@ local function showLogo()
     logo.Position = UDim2.new(0.5, 0, 0.5, 0) 
     logo.AnchorPoint = Vector2.new(0.5, 0.5)
     logo.BackgroundTransparency = 1
-    logo.Image = "rbxassetid://102238421384752"
+    logo.Image = "rbxassetid://13488010891"
     logo.ImageTransparency = 1
     logo.Parent = screenGui
 
@@ -498,3 +498,4 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
