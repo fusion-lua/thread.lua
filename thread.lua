@@ -92,7 +92,7 @@ local PLAYER_MAX_DIST = 70000
 local NPC_MAX_DIST = 70000
 local HIDE_LOCALPLAYER = true
 
-local Team = {"handakinking","bjlwad"}
+local Team = {"example1"}
 local Enemy = {"example1","example2"}
 
 local Colors = {
@@ -497,6 +497,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
