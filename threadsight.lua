@@ -23,6 +23,7 @@ F3 - Toggle Player & NPC ESP
 F4 - Toggle Player Visibility Through Walls
 F5 - Stop / Remove All ESP
 F6 - List all bosses and their status
+F8 - Toggle viewmodel cleanse (transparent viewmodel)
 `  - Hold to zoom
 Scroll Wheel - Aimbot (Toggle)
 	
@@ -486,6 +487,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
