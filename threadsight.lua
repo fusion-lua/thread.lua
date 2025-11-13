@@ -154,18 +154,6 @@ local function removeHighlight(char)
 	end
 end
 
-local function applyForceFieldEffect(char)
-	if not char then return end
-	for _, obj in ipairs(char:GetDescendants()) do
-		if obj:IsA("BasePart") then
-			obj.Material = Enum.Material.ForceField
-		end
-		if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("SpecialMesh") then
-			obj:Destroy()
-		end
-	end
-end
-
 local function createHighlight(char, plr, isNPC)
 	if not char or char:FindFirstChildOfClass("Highlight") then return end
 	if plr == LocalPlayer then return end
@@ -350,12 +338,10 @@ end
 
 if HIDE_LOCALPLAYER and LocalPlayer.Character then
 	wait(0.1)
-	applyForceFieldEffect(LocalPlayer.Character)
 end
 LocalPlayer.CharacterAdded:Connect(function(char)
 	if HIDE_LOCALPLAYER then
 		wait(0.1)
-		applyForceFieldEffect(char)
 	end
 end)
 
@@ -500,6 +486,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
