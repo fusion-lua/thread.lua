@@ -8,7 +8,6 @@ local KILL_KEY = Enum.KeyCode.F5
 local SHOW_DISTANCE = 1000
 local DRAWING_THICKNESS = 2
 local PLAYER_COLOR = Color3.fromRGB(255, 255, 255)
-local NPC_COLOR = Color3.fromRGB(255, 255, 0)
 
 local pairsToConnect = {
     {"Head","UpperTorso"}, {"UpperTorso","LowerTorso"},
@@ -33,10 +32,14 @@ local function newLine(color)
     return l
 end
 
-local function makeSkeleton(color)
+local function makeSkeleton(color, model)
     local tbl = {}
     for _,pair in ipairs(pairsToConnect) do
-        table.insert(tbl, {fromName=pair[1], toName=pair[2], line=newLine(color)})
+        local fromP = model:FindFirstChild(pair[1])
+        local toP = model:FindFirstChild(pair[2])
+        if fromP and toP then
+            table.insert(tbl, {from=fromP, to=toP, line=newLine(color)})
+        end
     end
     return tbl
 end
@@ -50,27 +53,22 @@ local function cleanup(model)
     end
 end
 
-local function validPart(model, name)
-    local p = model and model:FindFirstChild(name)
-    if p and p:IsA("BasePart") then return p end
-end
-
-local function worldToScreen(pos)
-    local p, on = Camera:WorldToViewportPoint(pos)
-    return Vector2.new(p.X, p.Y), on
-end
-
 local function addModel(model)
     if tracked[model] then return end
     if model:IsA("Model") then
         local hum = model:FindFirstChildOfClass("Humanoid")
         local root = model:FindFirstChild("HumanoidRootPart")
         if hum and root then
-            local color = NPC_COLOR
-            if Players:GetPlayerFromCharacter(model) then
-                color = PLAYER_COLOR
-            end
-            tracked[model] = {model=model, segments=makeSkeleton(color), color=color}
+            local player = Players:GetPlayerFromCharacter(model)
+            if not player then return end -- Only track player skeletons
+            local color = PLAYER_COLOR
+            tracked[model] = {
+                model = model,
+                segments = makeSkeleton(color, model),
+                color = color,
+                humanoid = hum,
+                root = root
+            }
         end
     end
 end
@@ -84,38 +82,46 @@ end
 scanChildren(workspace)
 workspace.ChildAdded:Connect(scanChildren)
 
+local function worldToScreen(pos)
+    local p, on = Camera:WorldToViewportPoint(pos)
+    return Vector2.new(p.X, p.Y), on
+end
+
 local function updateESP()
-    local lpRoot = Players.LocalPlayer.Character and (Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or Players.LocalPlayer.Character:FindFirstChild("LowerTorso"))
+    local lpChar = Players.LocalPlayer.Character
+    local lpRoot = lpChar and (lpChar:FindFirstChild("HumanoidRootPart") or lpChar:FindFirstChild("LowerTorso"))
     local lpPos = lpRoot and lpRoot.Position or Vector3.new()
+
     for model,data in pairs(tracked) do
         if not model.Parent then cleanup(model) continue end
-        local hum = model:FindFirstChildOfClass("Humanoid")
-        if not hum or hum.Health <= 0 then
+        if data.humanoid.Health <= 0 then
             for _,seg in ipairs(data.segments) do seg.line.Visible = false end
             continue
         end
-        local root = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("LowerTorso")
-        if not root then
+
+        local dist = (data.root.Position - lpPos).Magnitude
+        if SHOW_DISTANCE and dist > SHOW_DISTANCE then
             for _,seg in ipairs(data.segments) do seg.line.Visible = false end
             continue
         end
-        if SHOW_DISTANCE and (root.Position - lpPos).Magnitude > SHOW_DISTANCE then
-            for _,seg in ipairs(data.segments) do seg.line.Visible = false end
-            continue
-        end
+
+        local screenCache = {}
         for _,seg in ipairs(data.segments) do
-            local p1 = validPart(model, seg.fromName)
-            local p2 = validPart(model, seg.toName)
-            if p1 and p2 then
-                local s1,on1 = worldToScreen(p1.Position)
-                local s2,on2 = worldToScreen(p2.Position)
-                if on1 and on2 then
-                    seg.line.Visible = espEnabled
-                    seg.line.From = s1
-                    seg.line.To = s2
-                else
-                    seg.line.Visible = false
-                end
+            local f, t = seg.from, seg.to
+            if not f or not t then
+                seg.line.Visible = false
+                continue
+            end
+            screenCache[f] = screenCache[f] or {worldToScreen(f.Position)}
+            screenCache[t] = screenCache[t] or {worldToScreen(t.Position)}
+
+            local s1,on1 = screenCache[f][1], screenCache[f][2]
+            local s2,on2 = screenCache[t][1], screenCache[t][2]
+
+            if on1 and on2 then
+                seg.line.Visible = espEnabled
+                seg.line.From = s1
+                seg.line.To = s2
             else
                 seg.line.Visible = false
             end
@@ -124,7 +130,9 @@ local function updateESP()
 end
 
 conRender = RunService.RenderStepped:Connect(function()
-    if running and espEnabled then updateESP() end
+    if running and espEnabled then
+        updateESP()
+    end
 end)
 
 UserInputService.InputBegan:Connect(function(input,gpe)
