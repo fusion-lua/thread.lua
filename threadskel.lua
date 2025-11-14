@@ -3,7 +3,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Camera = workspace.CurrentCamera
 
-local TOGGLE_KEY = Enum.KeyCode.RightControl
+local TOGGLE_KEY = Enum.KeyCode.F3
 local KILL_KEY = Enum.KeyCode.F5
 local SHOW_TEAM = true -- shows their team color. does not affect pd.
 local SHOW_DISTANCE = 1000
