@@ -8,7 +8,7 @@ local KILL_KEY = Enum.KeyCode.F5
 local SHOW_TEAM = true -- shows their team color. does not affect pd.
 local SHOW_DISTANCE = 1000
 local DRAWING_THICKNESS = 2
-local DEFAULT_COLOR = Color3.fromRGB(255, 255, 0)
+local DEFAULT_COLOR = Color3.fromRGB(255, 0, 0)
 
 local pairsToConnect = {
     {"Head","UpperTorso"},
