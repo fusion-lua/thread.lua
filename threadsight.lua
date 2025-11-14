@@ -1,20 +1,17 @@
+
 print([[
 
 =============================================
               	 THREAD.LUA
 =============================================
-         EVERY EXECUTOR SUPPORTED.
+          EVERY EXECUTOR SUPPORTED
 
-Developed by Fusion
-Open-sourced, legit universal script designed for Project Delta.
-Do not resell or claim ownership. It is completely free.
-Updated regularly — join the Discord for updates, devlog, detection
-and more:
+Open source uni/pd script
+join the Discord for updates, devlog, detection and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 1.0.1  |  Status: Stable
-Silent. Consistent. Free.
+Version: 1.2.1  |  Status: Stable
 ------------------------------------------
 
 F1 - Toggle Aimbot FOV
@@ -487,6 +484,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
