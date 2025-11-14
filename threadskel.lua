@@ -8,6 +8,7 @@ local KILL_KEY = Enum.KeyCode.F5
 local SHOW_TEAM = true -- shows their team color. does not affect pd.
 local SHOW_DISTANCE = 1000
 local DRAWING_THICKNESS = 2
+local DEFAULT_COLOR = Color3.fromRGB(255, 255, 0)
 
 local pairsToConnect = {
     {"Head","UpperTorso"},
@@ -37,6 +38,7 @@ local function newLine()
     l.From = Vector2.new()
     l.To = Vector2.new()
     l.Thickness = DRAWING_THICKNESS
+    l.Color = DEFAULT_COLOR
     return l
 end
 
@@ -92,13 +94,6 @@ local function validPart(char,name)
     return nil
 end
 
-local function getAimFactor(screenPos)
-    local center = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)
-    local dist = (screenPos - center).Magnitude
-    local maxDist = 120
-    return 1 - math.clamp(dist/maxDist,0,1)
-end
-
 local function updateESP()
     for name,data in pairs(playerBoxes) do
         local plr = data.player
@@ -133,15 +128,6 @@ local function updateESP()
             continue
         end
 
-        local head = plr.Character:FindFirstChild("Head")
-        local aimFactor = 0
-        if head then
-            local headScreen, headOn = worldToScreen(head.Position)
-            if headOn then
-                aimFactor = getAimFactor(headScreen)
-            end
-        end
-
         for _,seg in ipairs(data.segments) do
             local p1 = validPart(plr.Character, seg.fromName)
             local p2 = validPart(plr.Character, seg.toName)
@@ -154,19 +140,7 @@ local function updateESP()
                     seg.line.Visible = espEnabled
                     seg.line.From = s1
                     seg.line.To = s2
-
-                    local baseColor
-                    if plr.Team == Players.LocalPlayer.Team and plr.Team ~= nil then
-                        baseColor = Color3.fromRGB(120,120,120)
-                    else
-                        baseColor = plr.Team and plr.Team.TeamColor.Color or Color3.fromRGB(255,255,255)
-                    end
-
-                    local r = baseColor.R + (1 - baseColor.R) * aimFactor
-                    local g = baseColor.G * (1 - aimFactor)
-                    local b = baseColor.B * (1 - aimFactor)
-
-                    seg.line.Color = Color3.new(r,g,b)
+                    seg.line.Color = DEFAULT_COLOR
                 else
                     seg.line.Visible = false
                 end
