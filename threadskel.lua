@@ -29,6 +29,7 @@ local function newLine(color)
     l.Visible = false
     l.Thickness = DRAWING_THICKNESS
     l.Color = color
+    l.ZIndex = 0 -- render below GUI
     return l
 end
 
@@ -60,7 +61,8 @@ local function addModel(model)
         local root = model:FindFirstChild("HumanoidRootPart")
         if hum and root then
             local player = Players:GetPlayerFromCharacter(model)
-            if not player then return end -- Only track player skeletons
+            if not player then return end
+            if player == Players.LocalPlayer then return end -- skip self
             local color = PLAYER_COLOR
             tracked[model] = {
                 model = model,
