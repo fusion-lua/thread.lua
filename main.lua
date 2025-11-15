@@ -24,7 +24,7 @@ join the Discord for updates, devlog, detection and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 2.0.0  |  Status: Stable
+Version: 2.1.0  |  Status: Stable
 ------------------------------------------
 
 F1 - Toggle Aimbot FOV
