@@ -1,4 +1,5 @@
 local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
 
 local function sendNotification(title, text, duration)
     duration = duration or 3
@@ -10,6 +11,7 @@ local function sendNotification(title, text, duration)
         })
     end)
 end
+
 print([[
 
 =============================================
@@ -22,7 +24,7 @@ join the Discord for updates, devlog, detection and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 1.4.1  |  Status: Stable
+Version: 2.0.0  |  Status: Stable
 ------------------------------------------
 
 F1 - Toggle Aimbot FOV
@@ -53,3 +55,15 @@ sendNotification("thread.lua", "Inventory checking loaded!", 3)
 sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadcleanseview.lua"))()
+
+local f5Connection
+f5Connection = UserInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+    if input.KeyCode == Enum.KeyCode.F5 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
+        if f5Connection then
+            f5Connection:Disconnect()
+            f5Connection = nil
+        end
+    end
+end)
