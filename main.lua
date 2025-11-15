@@ -53,3 +53,5 @@ Scroll Wheel - Aimbot (Toggle)
 =============================================
 
 ]])
+
+loadtsring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
