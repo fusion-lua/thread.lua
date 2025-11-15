@@ -12,7 +12,7 @@ local lineHeight = textSize + 4
 local charWidth = 8
 local offset = Vector3.new(0, 0, 0)
 
-local targetItems = {"r700","tfz9","altyn","m4","val","hspv","jpc","zsh","tors","crown","6b47","6b45","6b5","kulon","mosin","saiga","Mp5","svd","fal","Scavking","6b27","6b23","sks","izh","akm","motor","6b2","spsh","flare","adar","vz","bandolier","recon","dozer","tanker","concealed","makarov","pm","tokarev","tt","fast","ppsh","head","ssh","uno","mk23","mp443"}
+local targetItems = {"r700","tfz9","altyn","m4","val","hspv","jpc","zsh","tors","crown","6b47","6b45","6b5","kulon","mosin","saiga","Mp5","svd","fal","Scavking","6b27","6b23","sks","izh","akm","motor","6b2","spsh","flare","adar","vz","bandolier","recon","dozer","tanker","concealed","makarov","pm","tokarev","tt","fast","ppsh","ssh","uno"}
 
 local function formatItems(itemList)
     if #itemList == 0 then return {"none"} end
