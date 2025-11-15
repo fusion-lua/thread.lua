@@ -8,6 +8,7 @@ local activeTags = {}
 local textSize = 14
 local lineHeight = textSize + 4
 local charWidth = 8
+local offset = Vector3.new(0, 25, 0)
 
 local targetItems = {"r700","tfz9","altyn","m4","val","hspv","jpc","zsh","tors","crown","6b47","6b45","6b5","kulon","mosin","saiga","Mp5","svd","fal","Scavking","6b27","6b23","sks","izh","akm","motor","6b2","spsh","flare","adar","vz","bandolier","recon","dozer","tanker","concealed","makarov","pm","tokarev","tt"}
 
@@ -53,7 +54,7 @@ local function createOrUpdateTag(character, itemList)
     tag.Size = UDim2.new(0, width, 0, height)
     tag.Adornee = hrp
     tag.AlwaysOnTop = true
-    tag.StudsOffset = Vector3.new(0, 3, 0)
+    tag.StudsOffset = offset -- <-- Apply the offset here
     tag.Enabled = enabled
 
     local textLabel = Instance.new("TextLabel")
