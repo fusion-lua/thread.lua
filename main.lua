@@ -10,18 +10,6 @@ local function sendNotification(title, text, duration)
         })
     end)
 end
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadaim.lua"))()
-sendNotification("thread.lua", "Aimbot loaded!", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadsight.lua"))()
-sendNotification("thread.lua", "Primary & ESP Loaded!", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadskel.lua"))()
-sendNotification("thread.lua", "Skeleton + Drawing loaded!", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/invchecker.lua"))()
-sendNotification("thread.lua", "Inventory checking loaded!", 3)
-sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
-
 print([[
 
 =============================================
@@ -54,4 +42,14 @@ Scroll Wheel - Aimbot (Toggle)
 
 ]])
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadaim.lua"))()
+sendNotification("thread.lua", "Aimbot loaded!", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadsight.lua"))()
+sendNotification("thread.lua", "Primary & ESP Loaded!", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadskel.lua"))()
+sendNotification("thread.lua", "Skeleton + Drawing loaded!", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/invchecker.lua"))()
+sendNotification("thread.lua", "Inventory checking loaded!", 3)
+sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadcleanseview.lua"))()
