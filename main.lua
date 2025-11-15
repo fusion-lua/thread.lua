@@ -50,7 +50,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua
 sendNotification("thread.lua", "Primary & ESP Loaded!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadskel.lua"))()
 sendNotification("thread.lua", "Skeleton + Drawing loaded!", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/invchecker.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadinvchecker.lua"))()
 sendNotification("thread.lua", "Inventory checking loaded!", 3)
 sendNotification("thread.lua", "Loading complete!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadkeybindlist.lua"))()
