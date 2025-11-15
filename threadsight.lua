@@ -1,4 +1,3 @@
-
 print([[
 
 =============================================
@@ -48,8 +47,6 @@ local function Notify(title, text, duration)
 		})
 	end)
 end
-
-Notify("thread.lua", "Loaded successfully. Check console (F9) for keybinds.", 7)
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -105,9 +102,9 @@ local Colors = {
 	NPCDanger = Color3.fromRGB(255,0,0)
 }
 
-local DangerNPCs = {"Death","Dozer","Anton","Whisper","Mi","BTR"}
-local NPC_IGNORE_NAMES = {"playermodel","viewmodel", LocalPlayer.Name}
-local SpecialNPCs = {"mikhel","antonguard"}
+local DangerNPCs = {"Death","Dozer","Anton","Whisper","BTR"}
+local NPC_IGNORE_NAMES = {"playermodel","viewmodel", LocalPlayer.Name, "mikhel"}
+local SpecialNPCs = {"SportBagGrayPlaceholder"}
 
 local function getColorForPlayer(plr)
 	local name = plr.Name
@@ -188,37 +185,39 @@ local function createHighlight(char, plr, isNPC)
 	h.Parent = char
 
 	local headGui = Instance.new("BillboardGui")
-	headGui.Name = "HeadTag"
-	headGui.Adornee = rootPart
-	headGui.Size = UDim2.new(0,140,0,40)
-	headGui.StudsOffset = Vector3.new(0,3,0)
-	headGui.AlwaysOnTop = true
+headGui.Name = "HeadTag"
+headGui.Adornee = rootPart
+headGui.Size = UDim2.new(0,140,0,30) -- smaller overall height
+headGui.StudsOffset = Vector3.new(0,3,0)
+headGui.AlwaysOnTop = true
 
-	local nameLabel = Instance.new("TextLabel")
-	nameLabel.Size = UDim2.new(1,0,0.5,0)
-	nameLabel.Position = UDim2.new(0,0,0,0)
-	nameLabel.BackgroundTransparency = 1
-	nameLabel.TextScaled = true
-	nameLabel.Font = Enum.Font.Code
-	nameLabel.TextStrokeTransparency = 0
-	nameLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
-	nameLabel.Text = isNPC and char.Name or plr.Name
-	nameLabel.TextColor3 = color
-	nameLabel.Parent = headGui
+local nameLabel = Instance.new("TextLabel")
+nameLabel.Size = UDim2.new(1,0,0.55,0) -- slightly bigger than half
+nameLabel.Position = UDim2.new(0,0,0,0)
+nameLabel.BackgroundTransparency = 1
+nameLabel.TextScaled = false
+nameLabel.TextSize = 13
+nameLabel.Font = Enum.Font.Code
+nameLabel.TextStrokeTransparency = 0
+nameLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+nameLabel.Text = isNPC and char.Name or plr.Name
+nameLabel.TextColor3 = color
+nameLabel.Parent = headGui
 
-	local hpLabel = Instance.new("TextLabel")
-	hpLabel.Size = UDim2.new(1,0,0.5,0)
-	hpLabel.Position = UDim2.new(0,0,0.5,0)
-	hpLabel.BackgroundTransparency = 1
-	hpLabel.TextScaled = true
-	hpLabel.Font = Enum.Font.Code
-	hpLabel.TextStrokeTransparency = 0
-	hpLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
-	if humanoid then
-		hpLabel.TextColor3 = getHPColor(humanoid)
-		hpLabel.Text = math.floor(humanoid.Health)
-	end
-	hpLabel.Parent = headGui
+local hpLabel = Instance.new("TextLabel")
+hpLabel.Size = UDim2.new(1,0,0.45,0) -- smaller than half to reduce gap
+hpLabel.Position = UDim2.new(0,0,0.55,0)
+hpLabel.BackgroundTransparency = 1
+hpLabel.TextScaled = false
+hpLabel.TextSize = 13
+hpLabel.Font = Enum.Font.Code
+hpLabel.TextStrokeTransparency = 0
+hpLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+if humanoid then
+	hpLabel.TextColor3 = getHPColor(humanoid)
+	hpLabel.Text = math.floor(humanoid.Health)
+end
+hpLabel.Parent = headGui
 
 	headGui.Parent = char
 
@@ -234,7 +233,8 @@ local function createHighlight(char, plr, isNPC)
 		distLabel.Size = UDim2.new(1,0,1,0)
 		distLabel.Position = UDim2.new(0,0,0,0)
 		distLabel.BackgroundTransparency = 1
-		distLabel.TextScaled = true
+		distLabel.TextScaled = false
+		distLabel.TextSize = 13
 		distLabel.Font = Enum.Font.Code
 		distLabel.TextStrokeTransparency = 0
 		distLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
@@ -436,7 +436,6 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 	if input.KeyCode == Enum.KeyCode.F3 then
 		enabled = not enabled
 		refreshHighlights()
-		Notify("thread.lua", "Toggled NPC/Player ESP", 3)
 	elseif input.KeyCode == Enum.KeyCode.F4 then
 		visibilityThroughWalls = not visibilityThroughWalls
 		for _, plr in ipairs(Players:GetPlayers()) do
@@ -447,7 +446,6 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 				end
 			end
 		end
-		Notify("thread.lua", "Toggled visibility through walls", 3)
 	elseif input.KeyCode == Enum.KeyCode.F5 then
 		for _, obj in ipairs(workspace:GetDescendants()) do
 			if obj:IsA("Model") then
@@ -457,7 +455,6 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 		for _, conn in pairs(connections) do
 			if typeof(conn) == "RBXScriptConnection" then conn:Disconnect() end
 		end
-		Notify("thread.lua", "Unloaded script.", 5)
 	elseif input.KeyCode == Enum.KeyCode.F6 then
 		for _, npc in ipairs(getAllNPCs()) do
 			if isNPCDanger(npc.Name) then
@@ -485,17 +482,3 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
