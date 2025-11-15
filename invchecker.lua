@@ -53,7 +53,7 @@ local function createOrUpdateTag(character, itemList)
     tag.Size = UDim2.new(0, width, 0, height)
     tag.Adornee = hrp
     tag.AlwaysOnTop = true
-    tag.StudsOffset = Vector3.new(0, 0, 0)
+    tag.StudsOffset = Vector3.new(0, 3, 0)
     tag.Enabled = enabled
 
     local textLabel = Instance.new("TextLabel")
