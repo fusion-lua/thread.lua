@@ -20,35 +20,6 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = PlayerGui
-
-local stroke = Instance.new("Frame")
-stroke.Size = UDim2.new(0, 205, 0, 205)
-stroke.Position = UDim2.new(0.5, 0, 0.5, 0)
-stroke.AnchorPoint = Vector2.new(0.5, 0.5)
-stroke.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-stroke.Parent = screenGui
-
-local strokeCorner = Instance.new("UICorner")
-strokeCorner.CornerRadius = UDim.new(0, 20)
-strokeCorner.Parent = stroke
-
-local image = Instance.new("ImageLabel")
-image.Image = "rbxassetid://134225845123500"
-image.Size = UDim2.new(0, 200, 0, 200)
-image.Position = UDim2.new(0.5, 0, 0.5, 0)
-image.AnchorPoint = Vector2.new(0.5, 0.5)
-image.BackgroundTransparency = 1
-image.Parent = stroke
-
-local imageCorner = Instance.new("UICorner")
-imageCorner.CornerRadius = UDim.new(0, 20)
-imageCorner.Parent = image
-
-task.wait(1.5)
-screenGui:Destroy()
-
 local enabled = false
 local visibilityThroughWalls = true
 local connections = {}
@@ -450,4 +421,5 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
