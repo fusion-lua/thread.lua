@@ -400,7 +400,6 @@ connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 				local humanoid = npc:FindFirstChildOfClass("Humanoid")
 				if humanoid and humanoid.Health > 0 then
 					print(string.format("NPC: %s | HP: %d", npc.Name, math.floor(humanoid.Health)))
-					Notify("thread.lua", npc.Name.." HP: "..math.floor(humanoid.Health), 3)
 				end
 			end
 		end
@@ -421,5 +420,6 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
