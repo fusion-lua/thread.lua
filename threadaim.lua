@@ -26,9 +26,39 @@ FOVStroke.Thickness = 1
 FOVStroke.Visible = FOVVisible
 
 local connections = {}
+local aiZonesTargets = {}
+
+local function scanAiZones()
+    aiZonesTargets = {}
+    if workspace:FindFirstChild("AiZones") then
+        for _, obj in pairs(workspace.AiZones:GetDescendants()) do
+            if obj:IsA("Humanoid") and obj.Parent:FindFirstChild("Head") then
+                table.insert(aiZonesTargets, obj.Parent.Head)
+            end
+        end
+    end
+end
+
+if workspace:FindFirstChild("AiZones") then
+    scanAiZones()
+    workspace.AiZones.DescendantAdded:Connect(function(obj)
+        if obj:IsA("Humanoid") and obj.Parent:FindFirstChild("Head") then
+            table.insert(aiZonesTargets, obj.Parent.Head)
+        end
+    end)
+    workspace.AiZones.DescendantRemoving:Connect(function(obj)
+        if obj:IsA("Humanoid") and obj.Parent:FindFirstChild("Head") then
+            for i, head in pairs(aiZonesTargets) do
+                if head == obj.Parent.Head then
+                    table.remove(aiZonesTargets, i)
+                    break
+                end
+            end
+        end
+    end)
+end
 
 connections.fovLoop = RunService.RenderStepped:Connect(function()
-    if not FOVCircle or not FOVStroke then return end
     local mousePos = UserInputService:GetMouseLocation()
     if FOVVisible then
         FOVCircle.Visible = true
@@ -41,11 +71,10 @@ connections.fovLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
-local function getClosestPlayer()
+local function getClosestTarget()
     local mousePos = UserInputService:GetMouseLocation()
     local shortestDistance = FOVCircle.Radius
     local bestTarget
-    local bestIsPlayer = false
 
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer then
@@ -58,27 +87,20 @@ local function getClosestPlayer()
                     if distance < shortestDistance then
                         shortestDistance = distance
                         bestTarget = head
-                        bestIsPlayer = true
                     end
                 end
             end
         end
     end
 
-    for _, obj in pairs(workspace:GetDescendants()) do
-        if obj:IsA("Humanoid") and obj.Health > 0 then
-            local root = obj.Parent:FindFirstChild("HumanoidRootPart")
-            local head = obj.Parent:FindFirstChild("Head")
-            if root and head and obj.Parent ~= LocalPlayer.Character then
-                local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
-                if onScreen then
-                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
-                    if distance < shortestDistance then
-                        if not bestIsPlayer then
-                            shortestDistance = distance
-                            bestTarget = head
-                        end
-                    end
+    for _, head in pairs(aiZonesTargets) do
+        if head and head.Parent and head.Parent:FindFirstChild("Humanoid") and head.Parent.Humanoid.Health > 0 then
+            local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+            if onScreen then
+                local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                if distance < shortestDistance then
+                    shortestDistance = distance
+                    bestTarget = head
                 end
             end
         end
@@ -87,29 +109,18 @@ local function getClosestPlayer()
     return bestTarget
 end
 
-
 connections.aimbotLoop = RunService.RenderStepped:Connect(function()
     if AimbotAvailable and Locking then
-        local target = getClosestPlayer()
+        local target = getClosestTarget()
         if target then
             local direction = (target.Position - Camera.CFrame.Position).Unit
-            local newCFrame = CFrame.lookAt(Camera.CFrame.Position, Camera.CFrame.Position + direction)
-            Camera.CFrame = Camera.CFrame:Lerp(newCFrame, SmoothSpeed)
+            Camera.CFrame = Camera.CFrame:Lerp(CFrame.lookAt(Camera.CFrame.Position, Camera.CFrame.Position + direction), SmoothSpeed)
         end
     end
 end)
 
-local function sendNotification(desc)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "thread.lua",
-        Text = desc,
-        Duration = 2
-    })
-end
-
 connections.input = UserInputService.InputBegan:Connect(function(input, processed)
     if processed then return end
-
     if input.KeyCode == Enum.KeyCode.F1 then
         FOVVisible = not FOVVisible
     elseif input.KeyCode == Enum.KeyCode.F2 then
