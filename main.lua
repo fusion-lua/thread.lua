@@ -21,3 +21,35 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua
 sendNotification("thread.lua", "Inventory checking loaded!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadcleanseview.lua"))()
 sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
+
+print([[
+
+=============================================
+              	 THREAD.LUA
+=============================================
+          EVERY EXECUTOR SUPPORTED
+
+Open source uni/pd script
+join the Discord for updates, devlog, detection and more:
+https://discord.gg/P24XGuvQ4u
+
+------------------------------------------
+Version: 1.4.1  |  Status: Stable
+------------------------------------------
+
+F1 - Toggle Aimbot FOV
+F2 - Toggle Aimbot
+F3 - Toggle Player & NPC ESP
+F4 - Toggle Player Visibility Through Walls
+F5 - Stop / Remove All ESP
+F6 - List all bosses and their status
+F7 - Toggle inventory checker
+F8 - Toggle viewmodel cleanse (transparent viewmodel)
+`  - Hold to zoom
+Scroll Wheel - Aimbot (Toggle)
+	
+---------------------------------------------
+© 2025 Fusion | Paid distribution restricted.
+=============================================
+
+]])
