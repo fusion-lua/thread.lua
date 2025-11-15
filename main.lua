@@ -31,7 +31,7 @@ F1 - Toggle Aimbot FOV
 F2 - Toggle Aimbot
 F3 - Toggle Player & NPC ESP
 F4 - Toggle Player Visibility Through Walls
-F5 - Stop / Remove All ESP
+F5 - Unload Script
 F6 - List all bosses and their status
 F7 - Toggle inventory checker
 F8 - Toggle viewmodel cleanse (transparent viewmodel)
@@ -55,4 +55,5 @@ sendNotification("thread.lua", "Inventory checking loaded!", 3)
 sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadunload.lua"))()
+sendNotification("thread.lua", "Unload possible. Press F5 to unload script.", 2)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadcleanseview.lua"))()
