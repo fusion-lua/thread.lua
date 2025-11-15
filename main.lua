@@ -35,6 +35,7 @@ F5 - Unload Script
 F6 - List all bosses and their status
 F7 - Toggle inventory checker
 F8 - Toggle viewmodel cleanse (transparent viewmodel)
+F10 - Keybind list
 `  - Hold to zoom
 Scroll Wheel - Aimbot (Toggle)
 	
