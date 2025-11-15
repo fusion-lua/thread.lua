@@ -24,7 +24,7 @@ join the Discord for updates, devlog, detection and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 2.1.0  |  Status: Stable
+Version: 2.2.0  |  Status: Stable
 ------------------------------------------
 
 F1 - Toggle Aimbot FOV
@@ -52,7 +52,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua
 sendNotification("thread.lua", "Skeleton + Drawing loaded!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/invchecker.lua"))()
 sendNotification("thread.lua", "Inventory checking loaded!", 3)
-sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
+sendNotification("thread.lua", "Loading complete!", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadkeybindlist.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadui.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadunload.lua"))()
