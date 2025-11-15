@@ -316,6 +316,7 @@ for _, btn in ipairs(buttons) do
 	slideTween(btn, true)
 end
 
+-- UPDATED F5 UNLOAD TO RESTORE FULLBRIGHT
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	if gameProcessed then return end
 	if input.KeyCode == Enum.KeyCode.F10 and not stopped then
@@ -327,8 +328,16 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		stopped = true
 		visorEnabled = false
 		tracersEnabled = false
-		fullbrightEnabled = false
 		highlightEnabled = false
+		-- Restore fullbright lighting if active
+		if fullbrightEnabled then
+			local lighting = game:GetService("Lighting")
+			lighting.Brightness = savedLighting.Brightness
+			lighting.ClockTime = savedLighting.ClockTime
+			lighting.GlobalShadows = savedLighting.GlobalShadows
+			lighting.OutdoorAmbient = savedLighting.OutdoorAmbient
+			fullbrightEnabled = false
+		end
 		for _, btn in ipairs(buttons) do
 			slideTween(btn, false)
 		end
