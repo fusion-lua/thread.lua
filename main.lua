@@ -55,16 +55,3 @@ sendNotification("thread.lua", "Inventory checking loaded!", 3)
 sendNotification("thread.lua", "Loading complete! Press F9 to view controls.", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadcleanseview.lua"))()
-
-local f5Connection
-f5Connection = UserInputService.InputBegan:Connect(function(input, processed)
-    if processed then return end
-    if input.KeyCode == Enum.KeyCode.F5 then
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadanim.lua"))()
-		sendNotification("thread.lua", "Attempted to unload.", "3)
-        if f5Connection then
-            f5Connection:Disconnect()
-            f5Connection = nil
-        end
-    end
-end)
