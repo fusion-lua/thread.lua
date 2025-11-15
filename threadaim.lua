@@ -89,10 +89,8 @@ connections.input = UserInputService.InputBegan:Connect(function(input, processe
 
     if input.KeyCode == Enum.KeyCode.F1 then
         FOVVisible = not FOVVisible
-        sendNotification("Aimbot FOV circle toggled " .. (FOVVisible and "on." or "off."))
     elseif input.KeyCode == Enum.KeyCode.F2 then
         AimbotAvailable = not AimbotAvailable
-        sendNotification("Aimbot toggled " .. (AimbotAvailable and "on. Click scroll wheel to lock." or "off."))
     elseif input.KeyCode == Enum.KeyCode.F5 then
         for _, conn in pairs(connections) do
             if conn.Connected then
@@ -105,7 +103,6 @@ connections.input = UserInputService.InputBegan:Connect(function(input, processe
     elseif input.UserInputType == Enum.UserInputType.MouseButton3 then
         if AimbotAvailable then
             Locking = not Locking
-            sendNotification("Aimbot lock toggled " .. (Locking and "on." or "off."))
         end
     end
 end)
