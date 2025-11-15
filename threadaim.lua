@@ -42,9 +42,10 @@ connections.fovLoop = RunService.RenderStepped:Connect(function()
 end)
 
 local function getClosestPlayer()
-    local closestHead
-    local shortestDistance = FOVCircle.Radius
     local mousePos = UserInputService:GetMouseLocation()
+    local shortestDistance = FOVCircle.Radius
+    local bestTarget
+    local bestIsPlayer = false
 
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer then
@@ -56,14 +57,36 @@ local function getClosestPlayer()
                     local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                     if distance < shortestDistance then
                         shortestDistance = distance
-                        closestHead = head
+                        bestTarget = head
+                        bestIsPlayer = true
                     end
                 end
             end
         end
     end
-    return closestHead
+
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("Humanoid") and obj.Health > 0 then
+            local root = obj.Parent:FindFirstChild("HumanoidRootPart")
+            local head = obj.Parent:FindFirstChild("Head")
+            if root and head and obj.Parent ~= LocalPlayer.Character then
+                local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+                if onScreen then
+                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                    if distance < shortestDistance then
+                        if not bestIsPlayer then
+                            shortestDistance = distance
+                            bestTarget = head
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return bestTarget
 end
+
 
 connections.aimbotLoop = RunService.RenderStepped:Connect(function()
     if AimbotAvailable and Locking then
