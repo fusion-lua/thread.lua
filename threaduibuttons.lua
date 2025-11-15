@@ -262,6 +262,55 @@ createButton("Tracers", function()
 end)
 createButton("Fullbright", toggleFullbright)
 
+-- LOOK HIGHLIGHT FEATURE WITH SIZE CHECK
+local highlightEnabled = false
+local currentHighlight
+local mouse = LocalPlayer:GetMouse()
+
+task.spawn(function()
+	while not stopped do
+		if highlightEnabled then
+			local target = mouse.Target
+			if target and target:IsA("BasePart") then
+				local size = target.Size
+				local maxDimension = math.max(size.X, size.Y, size.Z)
+				if maxDimension <= 50 then
+					if not currentHighlight then
+						currentHighlight = Instance.new("Highlight")
+						currentHighlight.FillColor = Color3.new(1,1,1)
+						currentHighlight.FillTransparency = 0.5
+						currentHighlight.OutlineTransparency = 1
+						currentHighlight.Parent = CoreGui
+					end
+					currentHighlight.Adornee = target
+				else
+					if currentHighlight then
+						currentHighlight.Adornee = nil
+					end
+				end
+			else
+				if currentHighlight then
+					currentHighlight.Adornee = nil
+				end
+			end
+		else
+			if currentHighlight then
+				currentHighlight:Destroy()
+				currentHighlight = nil
+			end
+		end
+		task.wait(0.05)
+	end
+end)
+
+createButton("Look Highlight", function()
+	highlightEnabled = not highlightEnabled
+	if not highlightEnabled and currentHighlight then
+		currentHighlight:Destroy()
+		currentHighlight = nil
+	end
+end)
+
 repositionButtons()
 for _, btn in ipairs(buttons) do
 	slideTween(btn, true)
@@ -279,12 +328,17 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		visorEnabled = false
 		tracersEnabled = false
 		fullbrightEnabled = false
+		highlightEnabled = false
 		for _, btn in ipairs(buttons) do
 			slideTween(btn, false)
 		end
 		task.delay(0.5, function()
 			for _, btn in ipairs(buttons) do btn:Destroy() end
 			for _, line in pairs(tracerLines) do line:Remove() end
+			if currentHighlight then
+				currentHighlight:Destroy()
+				currentHighlight = nil
+			end
 		end)
 	end
 end)
