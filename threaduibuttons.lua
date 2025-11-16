@@ -311,6 +311,67 @@ createButton("Look Highlight", function()
 	end
 end)
 
+-- INSTANT LOCK FEATURE
+local instantLockEnabled = false
+local holdingLock = false
+local savedCamCFrame = nil
+local cam = workspace.CurrentCamera
+
+local function getNearestLockTarget()
+    local closest
+    local closestDist = math.huge
+
+    local myChar = LocalPlayer.Character
+    local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+    if not myHRP then return nil end
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer and plr.Character then
+            local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                local dist = (hrp.Position - myHRP.Position).Magnitude
+                if dist < closestDist then
+                    closestDist = dist
+                    closest = hrp
+                end
+            end
+        end
+    end
+
+    return closest
+end
+
+UserInputService.InputBegan:Connect(function(input, gpe)
+    if gpe or stopped or not instantLockEnabled then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        holdingLock = true
+        savedCamCFrame = cam.CFrame
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gpe)
+    if gpe or stopped or not instantLockEnabled then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        holdingLock = false
+        if savedCamCFrame then
+            cam.CFrame = savedCamCFrame
+        end
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if stopped or not instantLockEnabled or not holdingLock then return end
+    local target = getNearestLockTarget()
+    if target then
+        cam.CFrame = CFrame.lookAt(cam.CFrame.Position, target.Position)
+    end
+end)
+
+createButton("Instant Lock", function()
+    instantLockEnabled = not instantLockEnabled
+end)
+
+
 repositionButtons()
 for _, btn in ipairs(buttons) do
 	slideTween(btn, true)
@@ -326,6 +387,9 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		menuVisible = not menuVisible
 	elseif input.KeyCode == Enum.KeyCode.F5 then
 		stopped = true
+		instantLockEnabled = false
+		holdingLock = false
+		savedCamCFrame = nil
 		visorEnabled = false
 		tracersEnabled = false
 		highlightEnabled = false
