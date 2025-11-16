@@ -322,12 +322,12 @@ local function getNearestLockTarget()
     local closestDist = math.huge
 
     local myChar = LocalPlayer.Character
-    local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+    local myHRP = myChar and myChar:FindFirstChild("Head")
     if not myHRP then return nil end
 
     for _, plr in ipairs(Players:GetPlayers()) do
         if plr ~= LocalPlayer and plr.Character then
-            local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
+            local hrp = plr.Character:FindFirstChild("Head")
             if hrp then
                 local dist = (hrp.Position - myHRP.Position).Magnitude
                 if dist < closestDist then
