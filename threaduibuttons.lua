@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local screenEffects = PlayerGui:WaitForChild("NoInsetGui"):WaitForChild("MainFrame"):WaitForChild("ScreenEffects")
 
-local textSize = 10
+local textSize = 10.5
 local padding = 12
 local buttonSpacing = 5
 local buttons = {}
