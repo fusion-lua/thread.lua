@@ -238,7 +238,7 @@ local function toggleFullbright()
 		savedLighting.ClockTime = lighting.ClockTime
 		savedLighting.GlobalShadows = lighting.GlobalShadows
 		savedLighting.OutdoorAmbient = lighting.OutdoorAmbient
-		lighting.Brightness = 2
+		lighting.Brightness = 4
 		if lighting.ClockTime >= 6 and lighting.ClockTime <= 18 then
 			lighting.ClockTime = 12
 		end
