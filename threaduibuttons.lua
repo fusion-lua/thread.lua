@@ -260,7 +260,7 @@ end)
 createButton("Tracers", function()
 	tracersEnabled = not tracersEnabled
 end)
-createButton("Fullbright", toggleFullbright)
+createButton("No Shadows", toggleFullbright)
 
 -- LOOK HIGHLIGHT FEATURE WITH SIZE CHECK
 local highlightEnabled = false
