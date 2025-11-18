@@ -56,22 +56,26 @@ local function updateClanTeam()
         local leaderName = clanFolder.Name
         local clanMembers = {}
 
-        -- just take the names of all children, no matter what they are
         for _, member in ipairs(clanFolder:GetChildren()) do
             table.insert(clanMembers, member.Name)
         end
 
-        -- check if local player is in this clan (leader or member)
-        if LocalPlayer.Name == leaderName or table.find(clanMembers, LocalPlayer.Name) then
-            table.insert(newTeam, leaderName) -- add leader
+        local inClan = (LocalPlayer.Name == leaderName) or table.find(clanMembers, LocalPlayer.Name)
+        if inClan then
+            if not table.find(newTeam, leaderName) then
+                table.insert(newTeam, leaderName)
+            end
             for _, memberName in ipairs(clanMembers) do
-                table.insert(newTeam, memberName) -- add all children
+                if not table.find(newTeam, memberName) then
+                    table.insert(newTeam, memberName)
+                end
             end
         end
     end
 
     Team = newTeam
 end
+
 
 local function getColorForPlayer(plr)
 	local name = plr.Name
@@ -455,6 +459,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
