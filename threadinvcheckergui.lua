@@ -44,7 +44,6 @@ header.Position = UDim2.new(0.5,0,0,5)
 header.ZIndex = 3
 header.Parent = frame
 
--- Scrolling frame for body
 local scrollFrame = Instance.new("ScrollingFrame")
 scrollFrame.BackgroundTransparency = 1
 scrollFrame.BorderSizePixel = 0
@@ -106,7 +105,6 @@ local folderBlacklist = { Pathfinder=true, Lighter=true, EstonianBorderMap=true,
 local containerBlacklist = { Attachments=true }
 local SpecialItems = { AsVal=true, TFZ98S=true, R700=true, SPSh44=true, FlareGun=true, HSPV=true, Altyn=true, M4=true, JPC=true, }
 
--- Updated formatItemsList to highlight containers & count duplicates
 local function formatItemsList(items)
 	if #items == 0 then return "Empty\n" end
 	local counts = {}
@@ -168,7 +166,6 @@ local function getInventoryText(plr)
 					end
 				end
 			end
-			-- Highlight folderItem if it's special
 			local folderDisplay = SpecialItems[folderItem.Name] and ("<font color='rgb(0,255,0)'>"..folderItem.Name.."</font>") or folderItem.Name
 			out = out..folderDisplay..":\n"..formatItemsList(containerItems).."\n"
 		end
@@ -176,7 +173,6 @@ local function getInventoryText(plr)
 	return out
 end
 
--- Tracking logic
 local tracking = false
 local updateTask
 
