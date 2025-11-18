@@ -4,6 +4,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 local StarterGui = game:GetService("StarterGui")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local function Notify(title, text, duration)
 	duration = duration or 3
@@ -30,7 +31,7 @@ local PLAYER_MAX_DIST = 70000
 local NPC_MAX_DIST = 70000
 local HIDE_LOCALPLAYER = true
 
-local Team = {"example1"}
+local Team = {}
 local Enemy = {"example1","example2"}
 
 local Colors = {
@@ -44,6 +45,33 @@ local Colors = {
 local DangerNPCs = {"Death","Dozer","Anton","Whisper","BTR"}
 local NPC_IGNORE_NAMES = {"playermodel","viewmodel", LocalPlayer.Name, "mikhel"}
 local SpecialNPCs = {"SportBagGrayPlaceholder"}
+
+local function updateClanTeam()
+    local newTeam = {}
+
+    local clansFolder = ReplicatedStorage:FindFirstChild("Clans")
+    if not clansFolder then return end
+
+    for _, clanFolder in ipairs(clansFolder:GetChildren()) do
+        local leaderName = clanFolder.Name
+        local clanMembers = {}
+
+        for _, member in ipairs(clanFolder:GetChildren()) do
+            if member:IsA("StringValue") then
+                table.insert(clanMembers, member.Value)
+            end
+        end
+
+        if LocalPlayer.Name == leaderName or table.find(clanMembers, LocalPlayer.Name) then
+            table.insert(newTeam, leaderName)
+            for _, memberName in ipairs(clanMembers) do
+                table.insert(newTeam, memberName)
+            end
+        end
+    end
+
+    Team = newTeam
+end
 
 local function getColorForPlayer(plr)
 	local name = plr.Name
@@ -370,6 +398,13 @@ workspace.DescendantAdded:Connect(function(obj)
 	end
 end)
 
+spawn(function()
+    while true do
+        updateClanTeam()
+        wait(5)
+    end
+end)
+
 connections.InputBegan = UIS.InputBegan:Connect(function(input, gp)
 	if gp then return end
 	if input.KeyCode == Enum.KeyCode.F3 then
@@ -420,6 +455,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
