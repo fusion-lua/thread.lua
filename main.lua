@@ -24,7 +24,7 @@ join the Discord for updates, devlog, detection and more:
 https://discord.gg/P24XGuvQ4u
 
 ------------------------------------------
-Version: 2.3.0  |  Status: Stable
+Version: 2.4.0  |  Status: Stable
 ------------------------------------------
 
 F1 - Toggle Aimbot FOV
@@ -51,8 +51,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua
 sendNotification("thread.lua", "Primary & ESP Loaded!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadskel.lua"))()
 sendNotification("thread.lua", "Skeleton + Drawing loaded!", 3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadinvchecker.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadinvcheckerbasic.lua"))()
 sendNotification("thread.lua", "Inventory checking loaded!", 3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadextrauib.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadinvcheckergui.lua"))()
 sendNotification("thread.lua", "Loading complete!", 3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadkeybindlist.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fusion-lua/thread.lua/refs/heads/main/threadui.lua"))()
