@@ -123,8 +123,9 @@ sendNotification(Enum.KeyCode.F1, "Aimbot FOV toggled")
 sendNotification(Enum.KeyCode.F2, "Aimbot toggled")
 sendNotification(Enum.KeyCode.F3, "ESP toggled")
 sendNotification(Enum.KeyCode.F4, "Chams style toggled")
-sendNotification(Enum.KeyCode.F7, "Inventory checker toggled")
+sendNotification(Enum.KeyCode.F7, "Inventory checker ESP toggled")
 sendNotification(Enum.KeyCode.F8, "Viewmodel changer toggled. Re-equip item to apply.")
+sendNotification(Enum.KeyCode.Comma, "Inventory checker GUI toggled.")
 
 UserInputService.InputBegan:Connect(function(input, processed)
 	if processed or not listening then return end
