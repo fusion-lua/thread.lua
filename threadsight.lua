@@ -56,16 +56,16 @@ local function updateClanTeam()
         local leaderName = clanFolder.Name
         local clanMembers = {}
 
+        -- just take the names of all children, no matter what they are
         for _, member in ipairs(clanFolder:GetChildren()) do
-            if member:IsA("StringValue") then
-                table.insert(clanMembers, member.Value)
-            end
+            table.insert(clanMembers, member.Name)
         end
 
+        -- check if local player is in this clan (leader or member)
         if LocalPlayer.Name == leaderName or table.find(clanMembers, LocalPlayer.Name) then
-            table.insert(newTeam, leaderName)
+            table.insert(newTeam, leaderName) -- add leader
             for _, memberName in ipairs(clanMembers) do
-                table.insert(newTeam, memberName)
+                table.insert(newTeam, memberName) -- add all children
             end
         end
     end
@@ -455,6 +455,7 @@ connections.InputEnded = UIS.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 
 
 
