@@ -1,7 +1,7 @@
 # thread.lua
 
 Join the discord for the loadstring & updates:
-https://discord.gg/P24XGuvQ4u
+```https://discord.gg/P24XGuvQ4u```
 
 regular updates, legit designed script
 
