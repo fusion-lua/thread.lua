@@ -40,7 +40,7 @@ F10 - Keybind list
 Scroll Wheel - Aimbot (Toggle)
 	
 ---------------------------------------------
-© 2025 Fusion | Paid distribution restricted.
+© 2025 fusion | Paid distribution restricted.
 =============================================
 
 ]])
