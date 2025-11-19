@@ -229,29 +229,47 @@ task.spawn(function()
 	end
 end)
 
+
 local fullbrightEnabled = false
 local savedLighting = {}
-local function toggleFullbright()
+
+local function applyFullbright()
 	local lighting = game:GetService("Lighting")
-	if not fullbrightEnabled then
+	if not savedLighting.Brightness then
 		savedLighting.Brightness = lighting.Brightness
 		savedLighting.ClockTime = lighting.ClockTime
 		savedLighting.GlobalShadows = lighting.GlobalShadows
 		savedLighting.OutdoorAmbient = lighting.OutdoorAmbient
-		lighting.Brightness = 4
-		if lighting.ClockTime >= 6 and lighting.ClockTime <= 18 then
-			lighting.ClockTime = 12
+	end
+
+	lighting.Brightness = 4
+	if lighting.ClockTime >= 6 and lighting.ClockTime <= 18 then
+		lighting.ClockTime = 12
+	end
+	lighting.GlobalShadows = false
+	lighting.OutdoorAmbient = Color3.new(1,1,1)
+end
+
+task.spawn(function()
+	while not stopped do
+		if fullbrightEnabled then
+			applyFullbright()
 		end
-		lighting.GlobalShadows = false
-		lighting.OutdoorAmbient = Color3.new(1,1,1)
-	else
+		task.wait(0.3)
+	end
+end)
+
+local function toggleFullbright()
+	fullbrightEnabled = not fullbrightEnabled
+	if not fullbrightEnabled and savedLighting.Brightness then
+		local lighting = game:GetService("Lighting")
 		lighting.Brightness = savedLighting.Brightness
 		lighting.ClockTime = savedLighting.ClockTime
 		lighting.GlobalShadows = savedLighting.GlobalShadows
 		lighting.OutdoorAmbient = savedLighting.OutdoorAmbient
 	end
-	fullbrightEnabled = not fullbrightEnabled
 end
+
 
 createButton("Delete Visors", function()
 	visorEnabled = true
@@ -260,7 +278,7 @@ end)
 createButton("Tracers", function()
 	tracersEnabled = not tracersEnabled
 end)
-createButton("No Shadows", toggleFullbright)
+createButton("Fullbright", toggleFullbright)
 
 -- LOOK HIGHLIGHT FEATURE WITH SIZE CHECK
 local highlightEnabled = false
