@@ -280,7 +280,6 @@ createButton("Tracers", function()
 end)
 createButton("Fullbright", toggleFullbright)
 
--- LOOK HIGHLIGHT FEATURE WITH SIZE CHECK
 local highlightEnabled = false
 local currentHighlight
 local mouse = LocalPlayer:GetMouse()
@@ -329,7 +328,6 @@ createButton("Look Highlight", function()
 	end
 end)
 
--- INSTANT LOCK FEATURE
 local instantLockEnabled = false
 local holdingLock = false
 local savedCamCFrame = nil
@@ -395,7 +393,6 @@ for _, btn in ipairs(buttons) do
 	slideTween(btn, true)
 end
 
--- UPDATED F5 UNLOAD TO RESTORE FULLBRIGHT
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	if gameProcessed then return end
 	if input.KeyCode == Enum.KeyCode.F10 and not stopped then
@@ -411,7 +408,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		visorEnabled = false
 		tracersEnabled = false
 		highlightEnabled = false
-		-- Restore fullbright lighting if active
 		if fullbrightEnabled then
 			local lighting = game:GetService("Lighting")
 			lighting.Brightness = savedLighting.Brightness
