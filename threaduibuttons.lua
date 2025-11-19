@@ -255,7 +255,7 @@ task.spawn(function()
 		if fullbrightEnabled then
 			applyFullbright()
 		end
-		task.wait(0.3)
+		task.wait(0.01)
 	end
 end)
 
