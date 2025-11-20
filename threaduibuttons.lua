@@ -278,7 +278,6 @@ end)
 createButton("Tracers", function()
 	tracersEnabled = not tracersEnabled
 end)
-createButton("Fullbright", toggleFullbright)
 
 local highlightEnabled = false
 local currentHighlight
